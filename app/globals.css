@@ -1,0 +1,373 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin; /* Options: auto, thin, none */
+  scrollbar-color: #4F46E5 transparent; 
+}
+
+/* Hide the scrollbar track */
+::-webkit-scrollbar {
+  width: 10px; /* Width of vertical scrollbar */
+  height: 2px; /* Height of horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Hide the track by making it transparent */
+}
+
+/* Change the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #4F46E5; /* Thumb color */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 2px solid transparent; /* Space around the thumb */
+  background-clip: content-box; /* Ensures padding around the thumb */
+}
+
+/* Optional: Change thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #4F46E5; /* Darker shade for hover effect */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  background-color: #0A0B0F;
+  /*000d18*/
+  overflow-x: hidden !important;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+/* ----------------------------------------------------- */
+
+.price-btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.price-btn-container .price-btn {
+  height: 50px;
+  /* margin: 20px; */
+  /* margin-bottom: 40px; */
+  position: relative;
+  width: 100%;
+}
+
+.price-btn-container .price-btn a {
+  align-items: center;
+  background: #647ebd;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.2);
+  color: #fff;
+  display: flex;
+  font-size: 16px;
+  font-weight: 400;
+  left: 0;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  letter-spacing: 1px;
+  text-decoration: none;
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
+  z-index: 1;
+  transition: 0.5s;
+}
+
+.price-btn-container .price-btn:hover a {
+  letter-spacing: 2px;
+}
+
+.price-btn-container .price-btn a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+  transform: skewX(45deg) translateX(0);
+  transition: 0.5s;
+}
+
+.price-btn-container .price-btn:hover a::before {
+  transform: skewX(45deg) translateX(200%);
+}
+
+.price-btn-container .price-btn::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -5px;
+  height: 10px;
+  width: 30px;
+  background: rgb(8, 107, 183);
+  border-radius: 10px;
+  transition: 0.5s;
+  transition-delay: 0s;
+}
+
+.price-btn-container .price-btn:hover::before {
+  bottom: 0;
+  height: 50%;
+  width: 80%;
+  border-radius: 30px;
+  transition-delay: 0.1s;
+}
+
+.price-btn-container .price-btn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -5px;
+  height: 10px;
+  width: 30px;
+  background: rgb(7, 95, 189);
+  border-radius: 10px;
+  transition: 0.5s;
+  transition-delay: 0s;
+}
+
+.price-btn-container .price-btn:hover::after {
+  top: 0;
+  height: 50%;
+  width: 80%;
+  border-radius: 30px;
+  transition-delay: 0.1s;
+}
+
+.price-btn-container .price-btn:nth-child(1):before,
+.price-btn-container .price-btn:nth-child(1)::after {
+  background: hwb(222 39% 26%);
+  box-shadow: 0 0 5px #647ebd, 0 0 15px #647ebd, 0 0 30px #647ebd,
+    0 0 90% #647ebd;
+}
+
+.container .btn:active a {
+  color: #ba55d3;
+}
+
+/* clerk js css */
+.cl-internal-1p733cp {
+  /* background-color: #0c2130; */
+  color: black;
+  border-radius: 0px;
+}
+
+.cl-headerTitle {
+  color: white;
+}
+
+/* .cl-internal-14tc293{
+  background-color: rgb(15, 73, 139);
+  padding: 10px 0;
+  border-radius: 20px;
+  color: white;
+} */
+
+.cl-internal-1dauvpw {
+  display: none;
+  background-color: #051119;
+}
+
+.cl-footer {
+  background-color: #051119;
+}
+
+.cl-internal-1hp5nqm {
+  display: none;
+}
+
+/* ----------------------------- */
+
+.sidebar-transition {
+  transition: width 2s, height 4s;
+}
+
+/* ------shadcn sidebar------ */
+@layer base {
+  :root {
+    /* --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%; */
+  }
+
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+/* ------------------------- */
+
+.cl-internal-i2i1cv {
+  background-color: #19183A !important;
+}
+
+.cl-internal-160xye5 {
+  background-color: #162845 !important;
+}
+
+.cl-rootBox{
+  width: 100% !important;
+  margin: 0 auto;
+  background-color: #0F1117 !important;
+}
+
+.cl-userProfile-root{
+  background-color: #0F1117 !important;
+}
+
+.cl-cardBox{
+  background-color: #0F1117 !important;
+  width: 100% !important;
+}
+
+.cl-internal-1efiaa8 {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  flex: 0 0 14.25rem;
+  width: 14.25rem;
+  position: relative;
+  max-width: 14.25rem;
+  background: linear-gradient(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)), linear-gradient(#1f1f2327, #190a3b33);
+  padding: 1.5rem 1.25rem 1rem 0.75rem;
+  margin-right: -0.5rem;
+  color: rgb(255, 255, 255);
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+
+.cl-internal-17g44ry {
+  box-sizing: border-box;
+  display: none !important;
+  flex-flow: column;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  flex: 0 0 14.25rem;
+  width: 14.25rem;
+  position: relative;
+  max-width: 14.25rem;
+  background: linear-gradient(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)), linear-gradient(rgb(0 0 0), rgb(64, 61, 118));
+  padding: 1.5rem 1.25rem 1rem 0.75rem;
+  margin-right: -0.5rem;
+  color: rgb(255, 255, 255);
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+
+.cl-pageScrollBox{
+  background-color: #0F1117 !important;
+}
+
+.cl-navbarMobileMenuRow{
+  display: none !important;
+}
+/* video player css */
+.rh5v-DefaultPlayer_controls {
+  /* display: none !important; */
+  background-color: #4F46E5 !important;
+  /*4F46E5*/
+  border-radius: 0 0 20px 20px !important;
+}
+
+.rh5v-PlayPause_component {
+  background-color: transparent !important;
+}
+
+.rh5v-Volume_component {
+  background-color: transparent !important;
+}
+
+.rh5v-Fullscreen_component {
+  background-color: transparent !important;
+}
+
+.rh5v-DefaultPlayer_video {
+  border-radius: 50px !important;
+}
+
+.rh5v-Overlay_component {
+  border-radius: 50px !important;
+}
+
+.rh5v-Overlay_inner {
+  background-color: #28097262 !important;
+  border-radius: 50% !important;
+}
+
+.glassy-btn {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
