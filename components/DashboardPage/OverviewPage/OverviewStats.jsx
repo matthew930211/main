@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useEffect, useState } from 'react'
 import { LuClapperboard } from 'react-icons/lu'
 import { DiYii } from "react-icons/di";

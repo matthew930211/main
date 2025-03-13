@@ -1,5 +1,3 @@
-"use client"
-
 import { useUser } from '@clerk/nextjs'
 import React, { useEffect, useState } from 'react'
 import { Orbitron, Poppins } from 'next/font/google'

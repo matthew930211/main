@@ -1,5 +1,3 @@
-"use client"
-
 import { Skeleton } from '@/components/ui/skeleton'
 import { useUser } from '@clerk/nextjs'
 import axios from 'axios'
