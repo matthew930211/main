@@ -50,7 +50,7 @@ const Hero = () => {
                     </div>
 
                     <section style={{ position: 'relative', width: '100%', maxHeight: "40vh", overflow: 'hidden' }} className='flex items-center justify-center mt-10 mx-auto max-w-3xl rounded-2xl shadow-2xl shadow-[#1F1B36]'>
-                        <Image src={"/assets/images/poster.PNG"} alt='Demo' width={800} height={800} />
+                    <Image src={`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/${process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_DASHBOARD}`} alt='Demo' width={800} height={800} />
                     </section>
                 </div>
 

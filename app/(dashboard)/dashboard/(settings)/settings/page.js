@@ -7,9 +7,8 @@ const SettingsPage = () => {
     return (
         <div>
             <div className='w-full'>
-
                 <div className='w-full xl:w-full'>
-                    <UserProfile className="w-full" />
+                    <UserProfile className="w-full" routing="hash" />
                 </div>
             </div>
         </div>

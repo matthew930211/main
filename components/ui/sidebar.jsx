@@ -3,6 +3,7 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority";
 import { PanelLeft } from "lucide-react"
+import { HiOutlineUser } from "react-icons/hi";
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -598,6 +599,17 @@ const SidebarMenuSubButton = React.forwardRef(
 )
 SidebarMenuSubButton.displayName = "SidebarMenuSubButton"
 
+const SidebarIcon = ({ icon: Icon, ...props }) => {
+  return (
+    <div className="relative flex items-center justify-center">
+      {/* Use dynamic import for icons to ensure client-side rendering */}
+      <div className="flex items-center justify-center">
+        {typeof Icon === 'function' ? <Icon {...props} /> : Icon}
+      </div>
+    </div>
+  );
+};
+
 export {
   Sidebar,
   SidebarContent,
@@ -623,4 +635,5 @@ export {
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,
+  SidebarIcon,
 }

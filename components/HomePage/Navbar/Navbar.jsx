@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className='pt-10 w-[90%] lg:w-full mx-auto !z-50'>
             <nav className='relative w-full lg:w-[70%] xl:w-[60%] mx-auto flex items-center justify-between'>
                 <Link href={"/"} className='flex items-start text-[#c1dcf1] gap-x-2'>
-                    <Image src={"/assets/images/logo3.png"} alt='InstaClip' width={120} height={120} className='w-[30px] h-[30px]' />
+                    <Image src={"/assets/images/instaclip_logo_1.png"} alt='InstaClip' width={120} height={120} className='w-[30px] h-[30px]' />
 
                     <div className='flex flex-col gap-y-0'>
                         <span className='text-2xl lg:text-xl'>InstaClip</span>

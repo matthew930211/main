@@ -294,7 +294,7 @@ const BuilderContainer = () => {
             if (!origin) {
                 toast({
                     variant: "default",
-                    description: "Please paste a instagram url",
+                    description: "Please paste a tiktok url",
                     action: <div className='!bg-[#6760f1] p-1 flex items-center justify-center rounded-full'>
                         <BiError className='!text-[#FDFFFF]' />
                     </div>
