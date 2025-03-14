@@ -327,7 +327,7 @@ const BuilderContainer = () => {
                     if (data?.success) {
                         console.log("video uploaded");
                         setSocialVideoLink("");
-                        setExportedVideos(data?.data);
+                        setExportedVideos(data?.details.video_path);
                         const uniqueId = generateUniqueId();
                         setGroupId(uniqueId);
                         setSocialExportedVideoRenderKey(socialExportedVideoRenderKey + 1)

@@ -8,6 +8,7 @@ import Navbar from '../Navbar/Navbar'
 import Image from 'next/image'
 
 const Hero = () => {
+
     return (
         <BackgroundLines className={`w-[90%] mx-auto !z-[999]`}>
             <div className="min-h-screen w-full mt-20 ">
@@ -50,7 +51,7 @@ const Hero = () => {
                     </div>
 
                     <section style={{ position: 'relative', width: '100%', maxHeight: "40vh", overflow: 'hidden' }} className='flex items-center justify-center mt-10 mx-auto max-w-3xl rounded-2xl shadow-2xl shadow-[#1F1B36]'>
-                    <Image src={`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/${process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_DASHBOARD}`} alt='Demo' width={800} height={800} />
+                    <Image src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_DASHBOARD}`} alt='Cloudinary Image' width={800} height={800} />
                     </section>
                 </div>
 
