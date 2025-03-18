@@ -1,20 +1,25 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add --exact --cwd E:\Works\WebWork\Node\main --dev typescript
+  /usr/bin/node /usr/bin/yarn add @types/react @types/three jquery -D
 
 PATH: 
-  E:\Works\WebWork\Node\main\node_modules\.bin;E:\Works\WebWork\Node\node_modules\.bin;E:\Works\WebWork\node_modules\.bin;E:\Works\node_modules\.bin;E:\node_modules\.bin;C:\Users\Administrator\AppData\Roaming\nvm\v22.11.0\node_modules\npm\node_modules\@npmcli\run-script\lib\node-gyp-bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Ruby34-x64\bin;c:\Users\Administrator\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\Administrator\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin\;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2024.1\bin;C:\Users\Administrator\AppData\Roaming\npm;C:\Users\Administrator\AppData\Local\Yarn\bin;C:\Users\Administrator\AppData\Local\Programs\Python\Python313;C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Scripts;C:\Program Files\Go\bin;C:\Program Files\Bandizip\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\TortoiseGit\bin;C:\Program Files\Java\jdk-21\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Ruby34-x64\bin;c:\Users\Administrator\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\Administrator\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin\;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2024.1\bin;C:\Users\Administrator\AppData\Roaming\npm;C:\Users\Administrator\AppData\Local\Yarn\bin;C:\Users\Administrator\AppData\Local\Programs\Python\Python313;C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Scripts;C:\Program Files\TortoiseGit\bin;C:\Program Files\Go\bin;C:\Program Files\Bandizip\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Fi;C:\Users\Administrator\signal\bin;;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps
+  /root/.cursor-server/cli/servers/Stable-ae378be9dc2f5f1a6a1a220c6e25f9f03c8d4e10/server/bin/remote-cli:/root/.local/share/pnpm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
 Yarn version: 
-  1.22.4
+  1.22.19
 
 Node version: 
-  22.11.0
+  20.19.0
 
 Platform: 
-  win32 x64
+  linux x64
 
 Trace: 
-  Error: EBUSY: resource busy or locked, copyfile 'C:\Users\Administrator\AppData\Local\Yarn\Cache\v6\npm-@alloc-quick-lru-5.2.0-integrity\node_modules\@alloc\quick-lru\readme.md' -> 'E:\Works\WebWork\Node\main\node_modules\@alloc\quick-lru\readme.md'
+  SyntaxError: /var/www/main/package.json: Expected double-quoted property name in JSON at position 3069
+      at JSON.parse (<anonymous>)
+      at /usr/lib/node_modules/yarn/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/usr/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/lib/node_modules/yarn/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -25,7 +30,8 @@ npm manifest:
       "dev": "next dev",
       "build": "next build",
       "start": "next start",
-      "lint": "next lint"
+      "lint": "next lint",
+      "start:prod": "npm run build && npm run start"
     },
     "dependencies": {
       "@chakra-ui/react": "^2.8.2",
@@ -109,7 +115,7 @@ npm manifest:
     "devDependencies": {
       "autoprefixer": "^10.0.1",
       "postcss": "^8",
-      "tailwindcss": "^3.3.0"
+      "tailwindcss": "^3.3.0",
     }
   }
 
@@ -6222,6 +6228,11 @@ Lockfile:
     resolved "https://registry.npmjs.org/type-fest/-/type-fest-2.19.0.tgz"
     integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
   
+  typescript@5.8.2:
+    version "5.8.2"
+    resolved "https://registry.npmjs.org/typescript/-/typescript-5.8.2.tgz"
+    integrity sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==
+  
   undici-types@~5.26.4:
     version "5.26.5"
     resolved "https://registry.npmjs.org/undici-types/-/undici-types-5.26.5.tgz"
@@ -6460,8 +6471,5 @@ Lockfile:
     version "4.5.2"
     resolved "https://registry.npmjs.org/zustand/-/zustand-4.5.2.tgz"
     integrity sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==
-    dependencies:
-      use-sync-external-store "1.2.0"
-FzFzAc9+g==
     dependencies:
       use-sync-external-store "1.2.0"

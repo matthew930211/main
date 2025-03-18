@@ -8,7 +8,7 @@ import { FaInstagram } from 'react-icons/fa6'
 import { ImFilePlay } from 'react-icons/im'
 import SocialVideoImport from '../../GeneratePage/UploadVideo/SocialVideoImport'
 import { useToast } from '@/hooks/use-toast'
-import { BiError } from 'react-icons/bi'
+import { BiError, BiCheck } from 'react-icons/bi'
 import ExportedVideoPreviews from '../../GeneratePage/ExportedVideoPreviews/ExportedVideoPreviews'
 import { useUser } from '@clerk/nextjs'
 import InstagramVideoImport from '../../GeneratePage/UploadVideo/InstagramVideoImport'
@@ -171,6 +171,13 @@ const BuilderContainer = () => {
                         setGroupId(uniqueId);
                         setSocialExportedVideoRenderKey(socialExportedVideoRenderKey + 1)
                         setIsImportingSocialVideo(false);
+                        toast({
+                            variant: "default",
+                            description: "Upload Successful",
+                            action: <div className='!bg-[#28a745] p-1 flex items-center justify-center rounded-full'>
+                                <BiCheck className='!text-[#FDFFFF]' />
+                            </div>
+                        })
                     } else {
                         toast({
                             variant: "default",
@@ -254,6 +261,13 @@ const BuilderContainer = () => {
                         setGroupId(uniqueId);
                         setSocialExportedVideoRenderKey(socialExportedVideoRenderKey + 1)
                         setIsImportingSocialVideo(false);
+                        toast({
+                            variant: "default",
+                            description: "Upload Successful",
+                            action: <div className='!bg-[#28a745] p-1 flex items-center justify-center rounded-full'>
+                                <BiCheck className='!text-[#FDFFFF]' />
+                            </div>
+                        })
                     } else {
                         toast({
                             variant: "default",
@@ -331,7 +345,39 @@ const BuilderContainer = () => {
                         const uniqueId = generateUniqueId();
                         setGroupId(uniqueId);
                         setSocialExportedVideoRenderKey(socialExportedVideoRenderKey + 1)
-                        setIsImportingSocialVideo(false);
+                        setIsImportingSocialVideo(false)
+
+                        // Prepare asset data to send to the Node.js server
+                        const assetData = {
+                            user_id: user?.id,
+                            paths: [{
+                                public_id: data.details.video_path.public_id, // Assuming this is the public ID from Cloudinary
+                                url: data.details.video_path.url, // Assuming this is the URL from Cloudinary
+                                title: data.details.video_path.title,   // Assuming this is the title of Video
+                                thumbnail_id: data.details.video_path.thumbnail_id  // Assuming this is the thumbnail of Video
+                            }]
+                        };
+
+                        // Save video information to Database
+                        const createAsset = await fetch(`${process.env.NEXT_PUBLIC_NODE_API_URL}/assets/create-asset`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(assetData),
+                        });
+
+                        if (!createAsset.ok) {
+                            throw new Error("Failed to save asset to Database");
+                        }
+
+                        toast({
+                            variant: "default",
+                            description: "Upload Successful",
+                            action: <div className='!bg-[#28a745] p-1 flex items-center justify-center rounded-full'>
+                                <BiCheck className='!text-[#FDFFFF]' />
+                            </div>
+                        })
                     } else {
                         toast({
                             variant: "default",
