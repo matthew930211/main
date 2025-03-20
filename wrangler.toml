@@ -7,6 +7,8 @@ compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 assets = { directory = ".open-next/assets", binding = "ASSETS" }
 
+pages_build_output_dir = "./dist"
+
 #[[kv_namespaces]]
 #binding = "NEXT_CACHE_WORKERS_KV"
 #id = "95f1dc09c484463b8899078e19bac113"
