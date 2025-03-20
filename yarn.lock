@@ -9993,6 +9993,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"constants@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "constants@npm:0.0.2"
+  checksum: 10c0/fc26dbfb08af3aa30eb8bfb646be204a74148c92ea170e49a5e8f0107f25dcfb8718b42efba211414e47092187518ea03026b05e3b0ccc5247efbc1cdd3d9931
+  languageName: node
+  linkType: hard
+
 "content-disposition@npm:^1.0.0":
   version: 1.0.0
   resolution: "content-disposition@npm:1.0.0"
@@ -11834,6 +11841,7 @@ __metadata:
     class-variance-authority: "npm:^0.7.0"
     clsx: "npm:^2.1.1"
     cmdk: "npm:1.0.0"
+    constants: "npm:^0.0.2"
     cookies-next: "npm:^4.1.1"
     date-fns: "npm:^4.1.0"
     embla-carousel-react: "npm:^8.3.1"
