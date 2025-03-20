@@ -95,6 +95,7 @@
     "recharts": "^2.13.3",
     "slick-carousel": "^1.8.1",
     "sonner": "^1.7.0",
+    "stream": "^0.0.3",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.163.0",
@@ -116,5 +117,10 @@
     "webpack": "^5.98.0",
     "wrangler": "3.107.3"
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "yarn@4.5.0",
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  }
 }

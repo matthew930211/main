@@ -9965,6 +9965,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"component-emitter@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "component-emitter@npm:2.0.0"
+  checksum: 10c0/65dfaf787ea49eb48f0ffec766bda7ec67e8dbeb3b406f08724dcae842e0aa274731fcccb9280b77d2b41693061731a9080b60d276020246a146544cd9900b83
+  languageName: node
+  linkType: hard
+
 "compute-scroll-into-view@npm:3.0.3":
   version: 3.0.3
   resolution: "compute-scroll-into-view@npm:3.0.3"
@@ -11863,6 +11870,7 @@ __metadata:
     recharts: "npm:^2.13.3"
     slick-carousel: "npm:^1.8.1"
     sonner: "npm:^1.7.0"
+    stream: "npm:^0.0.3"
     tailwind-merge: "npm:^2.5.4"
     tailwindcss: "npm:3.4.17"
     tailwindcss-animate: "npm:^1.0.7"
@@ -14888,6 +14896,15 @@ __metadata:
   version: 1.1.0
   resolution: "stoppable@npm:1.1.0"
   checksum: 10c0/ba91b65e6442bf6f01ce837a727ece597a977ed92a05cb9aea6bf446c5e0dcbccc28f31b793afa8aedd8f34baaf3335398d35f903938d5493f7fbe386a1e090e
+  languageName: node
+  linkType: hard
+
+"stream@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "stream@npm:0.0.3"
+  dependencies:
+    component-emitter: "npm:^2.0.0"
+  checksum: 10c0/5d262408583f3d5fed8077b33ad670320d85c6b7c0fb3ab73a9a632fbad0ee36f3c66e6feb5264cb39dbee3a619174fa886b5f69f98217666d0844f6a2f6510b
   languageName: node
   linkType: hard
 
