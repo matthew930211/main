@@ -6,7 +6,7 @@
   "minify": true,
   "assets": {
     "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "binding": "ASSET"
   },
   "observability": {
     "enabled": true
@@ -18,5 +18,5 @@
       "custom_domain": true
     }
   ],
-  "pages_build_output_dir": "./.vercel/output"
+  "pages_build_output_dir": "./.vercel/output/static"
 }
