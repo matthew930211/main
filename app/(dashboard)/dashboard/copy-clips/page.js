@@ -2,6 +2,7 @@ import BuilderContainer from '@/components/DashboardPage/CopyClipsPage/BuilderCo
 import SocialVideoLayouts from '@/components/DashboardPage/CopyClipsPage/SocialVideoLayouts/SocialVideoLayouts';
 import React from 'react'
 
+export const runtime = 'edge';
 
 const CopyClipsPage = () => {
     return (

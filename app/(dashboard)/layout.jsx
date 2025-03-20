@@ -8,6 +8,8 @@ import DashboardLayoutContainer from "@/components/DashboardPage/DashboardLayout
 import { getAuth, auth } from "@clerk/nextjs/server";
 import { checkSubscription } from "@/lib/actions/checkSubscription";
 
+export const runtime = 'edge';
+
 export default async function DashboardLayout({ children }) {
   const { userId } = await auth();
   const isPro = await checkSubscription(userId);

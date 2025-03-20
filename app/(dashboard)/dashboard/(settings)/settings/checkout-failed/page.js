@@ -1,5 +1,7 @@
 import Link from "next/link"
 
+export const runtime = 'edge';
+
 const CheckoutFailedPage = () => {
     return (
         <div className="min-h-[50vh] flex flex-col items-center justify-center">

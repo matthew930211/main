@@ -19,8 +19,6 @@ export const metadata = {
   description: "InstaClip generates short-form viral content instantly with AI. No more countless hours editing required.",
 };
 
-export const runtime = "edge";
-
 export default function RootLayout({ children }) {
 
   return (

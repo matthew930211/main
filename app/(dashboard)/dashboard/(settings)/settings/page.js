@@ -3,6 +3,8 @@ import { UserProfile } from '@clerk/nextjs'
 import { CiSettings } from 'react-icons/ci'
 import Link from 'next/link'
 
+export const runtime = 'edge';
+
 const SettingsPage = () => {
     return (
         <div>

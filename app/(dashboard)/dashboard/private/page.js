@@ -5,6 +5,8 @@ import { MdCollections, MdOutlinePublish, MdRebaseEdit } from "react-icons/md";
 import { auth } from "@clerk/nextjs/server";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+export const runtime = 'edge';
+
 const LibraryPage = async () => {
   const { userId } = await auth();
 

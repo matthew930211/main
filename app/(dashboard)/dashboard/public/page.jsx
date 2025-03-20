@@ -2,6 +2,8 @@ import PublicAssetsContainer from '@/components/DashboardPage/PublicPage/PublicA
 import { Film } from 'lucide-react'
 import React from 'react'
 
+export const runtime = 'edge';
+
 const page = () => {
     return (
         <div className='w-[90%] lg:w-full mx-auto'>

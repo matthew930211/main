@@ -17,6 +17,7 @@ const font = Poppins({
   weight: ["400", "500", "600", "700"]
 })
 
+export const runtime = 'edge';
 
 const DashboardPage = () => {
   // const { userId } = await auth();

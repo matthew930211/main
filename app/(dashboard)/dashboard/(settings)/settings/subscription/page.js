@@ -1,6 +1,8 @@
 import Pricing from '@/components/DashboardPage/SettingsPage/Pricing/Pricing'
 import React from 'react'
 
+export const runtime = 'edge';
+
 const SubscriptionPage = () => {
   return (
     <div>

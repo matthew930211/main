@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 
+export const runtime = 'edge';
+
 const QuotaExceedPage = () => {
     return (
         <div className='w-full flex items-center justify-center flex-col gap-y-2 min-h-[20vh]'>

@@ -6,6 +6,8 @@ import { auth } from '@clerk/nextjs/server'
 import React from 'react'
 import { RiAiGenerate } from 'react-icons/ri'
 
+export const runtime = 'edge';
+
 const GeneratePage = async () => {
     const { userId } = await auth();
 
