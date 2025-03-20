@@ -1,4 +1,4 @@
-'use cache'
+export const runtime = 'edge';
 
 import FAQ from "@/components/HomePage/FAQ/FAQ";
 import Footer from "@/components/HomePage/Footer/Footer";
