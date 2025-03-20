@@ -1,7 +1,7 @@
 name = "instaclips"
 
 # Set the entry point (VERY IMPORTANT)
-main = ".open-next/worker.js"  # Adjust this path to match your actual build output
+#main = ".open-next/worker.js"  # Adjust this path to match your actual build output
 
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
