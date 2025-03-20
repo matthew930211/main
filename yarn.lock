@@ -11860,12 +11860,12 @@ __metadata:
     postcss: "npm:8.4.49"
     postcss-flexbugs-fixes: "npm:^5.0.2"
     postcss-preset-env: "npm:^10.1.5"
-    react: "npm:^18.3.1"
+    react: "npm:18.3.1"
     react-card-flip: "npm:^1.2.2"
     react-cookie: "npm:^7.1.4"
     react-cookie-consent: "npm:^9.0.0"
     react-day-picker: "npm:8.10.1"
-    react-dom: "npm:^18.3.1"
+    react-dom: "npm:18.3.1"
     react-dropzone: "npm:^14.3.5"
     react-hook-form: "npm:^7.53.1"
     react-html5video: "npm:^2.5.1"
@@ -13979,7 +13979,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.3.1":
+"react-dom@npm:18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
   dependencies:
@@ -14294,7 +14294,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.3.1":
+"react@npm:18.3.1":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
   dependencies:

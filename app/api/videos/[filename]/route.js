@@ -8,6 +8,7 @@ export async function GET(request, { params }) {
     const videoPath = path.join("C:/Users/AB/Downloads", filename); // Path to your local video directory
 
     try {
+        const fs = require('fs');
         const stat = fs.statSync(videoPath);
         const file = fs.createReadStream(videoPath);
 

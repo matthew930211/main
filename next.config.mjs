@@ -1,14 +1,18 @@
-import { withNextVideo } from "next-video/process";
-/** @type {import('next').NextConfig} */
+// @ts-check
+
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
+    /* config options here */
+
     images: {
-        domains: ["res.cloudinary.com", "cdn.bhlist.co.in", "images.clerk.dev", "cdn.discordapp.com", "images.unsplash.com", "localhost", "img.clerk.com", "192.168.1.19", "192.168.1.23","192.168.1.25"],
+        domains: ["res.cloudinary.com", "cdn.bhlist.co.in", "images.clerk.dev", "cdn.discordapp.com", "images.unsplash.com", "localhost", "img.clerk.com", "192.168.1.19", "192.168.1.23", "192.168.1.25"],
     },
     experimental: {
-        dynamicIO: true,
-        allowMiddlewareResponseBody: true,
-        
+        // dynamicIO: true,
+        // allowMiddlewareResponseBody: true,
     },
-};
+}
 
-export default withNextVideo(nextConfig);
+export default nextConfig
