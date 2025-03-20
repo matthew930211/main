@@ -1,4 +1,4 @@
-globalThis.disableIncrementalCache = false;globalThis.disableDynamoDBCache = false;globalThis.isNextAfter15 = false;globalThis.openNextDebug = false;globalThis.openNextVersion = "3.5.2";
+globalThis.disableIncrementalCache = false;globalThis.disableDynamoDBCache = false;globalThis.isNextAfter15 = false;globalThis.openNextDebug = false;globalThis.openNextVersion = "3.4.2";
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -23,36 +23,6 @@ __export(cache_exports, {
   default: () => Cache
 });
 module.exports = __toCommonJS(cache_exports);
-
-// node_modules/@opennextjs/aws/dist/utils/cache.js
-async function hasBeenRevalidated(key, tags, cacheEntry) {
-  if (globalThis.openNextConfig.dangerous?.disableTagCache) {
-    return false;
-  }
-  const value = cacheEntry.value;
-  if (!value) {
-    return true;
-  }
-  if ("type" in cacheEntry && cacheEntry.type === "page") {
-    return false;
-  }
-  const lastModified = cacheEntry.lastModified ?? Date.now();
-  if (globalThis.tagCache.mode === "nextMode") {
-    return await globalThis.tagCache.hasBeenRevalidated(tags, lastModified);
-  }
-  const _lastModified = await globalThis.tagCache.getLastModified(key, lastModified);
-  return _lastModified === -1;
-}
-function getTagsFromValue(value) {
-  if (!value) {
-    return [];
-  }
-  try {
-    return value.meta?.headers?.["x-next-cache-tags"]?.split(",") ?? [];
-  } catch (e) {
-    return [];
-  }
-}
 
 // node_modules/@opennextjs/aws/dist/utils/binary.js
 var commonBinaryMimeTypes = /* @__PURE__ */ new Set([
@@ -206,16 +176,15 @@ var Cache = class {
       const cachedEntry = await globalThis.incrementalCache.get(key, true);
       if (cachedEntry?.value === void 0)
         return null;
-      const _tags = [...tags ?? [], ...softTags ?? []];
-      const _lastModified = cachedEntry.lastModified ?? Date.now();
-      const _hasBeenRevalidated = await hasBeenRevalidated(key, _tags, cachedEntry);
-      if (_hasBeenRevalidated)
+      const _lastModified = await globalThis.tagCache.getLastModified(key, cachedEntry?.lastModified);
+      if (_lastModified === -1) {
         return null;
+      }
       if ((tags ?? []).length === 0) {
         const path = softTags?.find((tag) => tag.startsWith("_N_T_/") && !tag.endsWith("layout") && !tag.endsWith("page"));
         if (path) {
-          const hasPathBeenUpdated = await hasBeenRevalidated(path.replace("_N_T_/", ""), [], cachedEntry);
-          if (hasPathBeenUpdated) {
+          const pathLastModified = await globalThis.tagCache.getLastModified(path.replace("_N_T_/", ""), cachedEntry.lastModified);
+          if (pathLastModified === -1) {
             return null;
           }
         }
@@ -235,17 +204,14 @@ var Cache = class {
       if (!cachedEntry?.value) {
         return null;
       }
-      const cacheData = cachedEntry.value;
-      const meta = cacheData.meta;
-      const tags = getTagsFromValue(cacheData);
-      const _lastModified = cachedEntry.lastModified ?? Date.now();
-      const _hasBeenRevalidated = await hasBeenRevalidated(key, tags, cachedEntry);
-      if (_hasBeenRevalidated)
+      const meta = cachedEntry.value.meta;
+      const _lastModified = await globalThis.tagCache.getLastModified(key, cachedEntry?.lastModified);
+      if (_lastModified === -1) {
         return null;
-      const store = globalThis.__openNextAls.getStore();
-      if (store) {
-        store.lastModified = _lastModified;
       }
+      const cacheData = cachedEntry?.value;
+      const requestId = globalThis.__openNextAls.getStore()?.requestId ?? "";
+      globalThis.lastModified[requestId] = _lastModified;
       if (cacheData?.type === "route") {
         return {
           lastModified: _lastModified,
@@ -370,7 +336,19 @@ var Cache = class {
             break;
         }
       }
-      await this.updateTagsOnSet(key, data, ctx);
+      const derivedTags = data?.kind === "FETCH" ? ctx?.tags ?? data?.data?.tags ?? [] : data?.kind === "PAGE" ? data.headers?.["x-next-cache-tags"]?.split(",") ?? [] : [];
+      debug("derivedTags", derivedTags);
+      const storedTags = await globalThis.tagCache.getByPath(key);
+      const tagsToWrite = derivedTags.filter((tag) => !storedTags.includes(tag));
+      if (tagsToWrite.length > 0) {
+        await globalThis.tagCache.writeTags(tagsToWrite.map((tag) => ({
+          path: key,
+          tag,
+          // In case the tags are not there we just need to create them
+          // but we don't want them to return from `getLastModified` as they are not stale
+          revalidatedAt: 1
+        })));
+      }
       debug("Finished setting cache");
     } catch (e) {
       error("Failed to set cache", e);
@@ -385,24 +363,6 @@ var Cache = class {
     }
     try {
       const _tags = Array.isArray(tags) ? tags : [tags];
-      if (globalThis.tagCache.mode === "nextMode") {
-        const paths = await globalThis.tagCache.getPathsByTags?.(_tags) ?? [];
-        await globalThis.tagCache.writeTags(_tags);
-        if (paths.length > 0) {
-          await globalThis.cdnInvalidationHandler.invalidatePaths(paths.map((path) => ({
-            initialPath: path,
-            rawPath: path,
-            resolvedRoutes: [
-              {
-                route: path,
-                // TODO: ideally here we should check if it's an app router page or route
-                type: "app"
-              }
-            ]
-          })));
-        }
-        return;
-      }
       for (const tag of _tags) {
         debug("revalidateTag", tag);
         const paths = await globalThis.tagCache.getByTag(tag);
@@ -443,27 +403,6 @@ var Cache = class {
       }
     } catch (e) {
       error("Failed to revalidate tag", e);
-    }
-  }
-  // TODO: We should delete/update tags in this method
-  // This will require an update to the tag cache interface
-  async updateTagsOnSet(key, data, ctx) {
-    if (globalThis.openNextConfig.dangerous?.disableTagCache || globalThis.tagCache.mode === "nextMode" || // Here it means it's a delete
-    !data) {
-      return;
-    }
-    const derivedTags = data?.kind === "FETCH" ? ctx?.tags ?? data?.data?.tags ?? [] : data?.kind === "PAGE" ? data.headers?.["x-next-cache-tags"]?.split(",") ?? [] : [];
-    debug("derivedTags", derivedTags);
-    const storedTags = await globalThis.tagCache.getByPath(key);
-    const tagsToWrite = derivedTags.filter((tag) => !storedTags.includes(tag));
-    if (tagsToWrite.length > 0) {
-      await globalThis.tagCache.writeTags(tagsToWrite.map((tag) => ({
-        path: key,
-        tag,
-        // In case the tags are not there we just need to create them
-        // but we don't want them to return from `getLastModified` as they are not stale
-        revalidatedAt: 1
-      })));
     }
   }
 };

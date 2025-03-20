@@ -1,4 +1,4 @@
-globalThis.monorepoPackagePath = "";globalThis.openNextDebug = false;globalThis.openNextVersion = "3.5.2";
+globalThis.monorepoPackagePath = "";globalThis.openNextDebug = false;globalThis.openNextVersion = "3.4.2";
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -282,7 +282,15 @@ var init_edge = __esm({
       },
       convertTo: async (result) => {
         if ("internalEvent" in result) {
-          const request2 = new Request(result.internalEvent.url, {
+          let url = result.internalEvent.url;
+          if (!result.isExternalRewrite) {
+            if (result.origin) {
+              url = `${result.origin.protocol}://${result.origin.host}${result.origin.port ? `:${result.origin.port}` : ""}${url}`;
+            } else {
+              url = `https://${result.internalEvent.headers.host}${url}`;
+            }
+          }
+          const request2 = new Request(url, {
             body: result.internalEvent.body,
             method: result.internalEvent.method,
             headers: {
@@ -334,7 +342,8 @@ var init_cloudflare_node = __esm({
         }
       }
       const internalEvent = await converter2.convertFrom(request2);
-      const url = new URL(request2.url);
+      const url = new URL(internalEvent.url);
+      internalEvent.url = url.href.slice(url.origin.length);
       const { promise: promiseResponse, resolve: resolveResponse } = Promise.withResolvers();
       const streamCreator = {
         writeHeaders(prelude) {
@@ -384,7 +393,6 @@ var init_dummy = __esm({
   "node_modules/@opennextjs/aws/dist/overrides/tagCache/dummy.js"() {
     dummyTagCache = {
       name: "dummy",
-      mode: "original",
       getByPath: async () => {
         return [];
       },
@@ -551,13 +559,12 @@ globalThis.__dirname ??= "";
 var NEXT_DIR = path.join(__dirname, ".next");
 var OPEN_NEXT_DIR = path.join(__dirname, ".open-next");
 debug({ NEXT_DIR, OPEN_NEXT_DIR });
-var NextConfig = { "env": {}, "eslint": { "ignoreDuringBuilds": false }, "typescript": { "ignoreBuildErrors": false, "tsconfigPath": "tsconfig.json" }, "distDir": ".next", "cleanDistDir": true, "assetPrefix": "", "cacheMaxMemorySize": 52428800, "configOrigin": "next.config.mjs", "useFileSystemPublicRoutes": true, "generateEtags": true, "pageExtensions": ["tsx", "ts", "jsx", "js"], "poweredByHeader": true, "compress": true, "analyticsId": "", "images": { "deviceSizes": [640, 750, 828, 1080, 1200, 1920, 2048, 3840], "imageSizes": [16, 32, 48, 64, 96, 128, 256, 384], "path": "/_next/image", "loader": "default", "loaderFile": "", "domains": ["res.cloudinary.com", "cdn.bhlist.co.in", "images.clerk.dev", "cdn.discordapp.com", "images.unsplash.com", "localhost", "img.clerk.com", "192.168.1.19", "192.168.1.23", "192.168.1.25"], "disableStaticImages": false, "minimumCacheTTL": 60, "formats": ["image/webp"], "dangerouslyAllowSVG": false, "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;", "contentDispositionType": "inline", "remotePatterns": [], "unoptimized": false }, "devIndicators": { "buildActivity": true, "buildActivityPosition": "bottom-right" }, "onDemandEntries": { "maxInactiveAge": 6e4, "pagesBufferLength": 5 }, "amp": { "canonicalBase": "" }, "basePath": "", "sassOptions": {}, "trailingSlash": false, "i18n": null, "productionBrowserSourceMaps": false, "optimizeFonts": true, "excludeDefaultMomentLocales": true, "serverRuntimeConfig": {}, "publicRuntimeConfig": {}, "reactProductionProfiling": false, "reactStrictMode": null, "httpAgentOptions": { "keepAlive": true }, "outputFileTracing": true, "staticPageGenerationTimeout": 60, "swcMinify": true, "output": "standalone", "modularizeImports": { "@mui/icons-material": { "transform": "@mui/icons-material/{{member}}" }, "lodash": { "transform": "lodash/{{member}}" } }, "experimental": { "serverMinification": true, "serverSourceMaps": false, "caseSensitiveRoutes": false, "clientRouterFilter": true, "clientRouterFilterRedirects": false, "fetchCacheKeyPrefix": "", "middlewarePrefetch": "flexible", "optimisticClientCache": true, "manualClientBasePath": false, "cpus": 3, "memoryBasedWorkersCount": false, "isrFlushToDisk": true, "workerThreads": false, "optimizeCss": false, "nextScriptWorkers": false, "scrollRestoration": false, "externalDir": false, "disableOptimizedLoading": false, "gzipSize": true, "craCompat": false, "esmExternals": true, "fullySpecified": false, "outputFileTracingRoot": "/var/www/main", "swcTraceProfiling": false, "forceSwcTransforms": false, "largePageDataBytes": 128e3, "adjustFontFallbacks": false, "adjustFontFallbacksWithSizeAdjust": false, "typedRoutes": false, "instrumentationHook": false, "bundlePagesExternals": false, "parallelServerCompiles": false, "parallelServerBuildTraces": false, "ppr": false, "missingSuspenseWithCSRBailout": true, "dynamicIO": true, "allowMiddlewareResponseBody": true, "outputFileTracingIncludes": { "/api/video": ["./videos/**/*.json"] }, "optimizePackageImports": ["lucide-react", "date-fns", "lodash-es", "ramda", "antd", "react-bootstrap", "ahooks", "@ant-design/icons", "@headlessui/react", "@headlessui-float/react", "@heroicons/react/20/solid", "@heroicons/react/24/solid", "@heroicons/react/24/outline", "@visx/visx", "@tremor/react", "rxjs", "@mui/material", "@mui/icons-material", "recharts", "react-use", "@material-ui/core", "@material-ui/icons", "@tabler/icons-react", "mui-core", "react-icons/ai", "react-icons/bi", "react-icons/bs", "react-icons/cg", "react-icons/ci", "react-icons/di", "react-icons/fa", "react-icons/fa6", "react-icons/fc", "react-icons/fi", "react-icons/gi", "react-icons/go", "react-icons/gr", "react-icons/hi", "react-icons/hi2", "react-icons/im", "react-icons/io", "react-icons/io5", "react-icons/lia", "react-icons/lib", "react-icons/lu", "react-icons/md", "react-icons/pi", "react-icons/ri", "react-icons/rx", "react-icons/si", "react-icons/sl", "react-icons/tb", "react-icons/tfi", "react-icons/ti", "react-icons/vsc", "react-icons/wi"], "trustHostHeader": false, "isExperimentalCompile": false }, "configFileName": "next.config.mjs" };
-var BuildId = "hmM7-E43fYhkZ1BzsNk5F";
+var NextConfig = { "env": {}, "eslint": { "ignoreDuringBuilds": false }, "typescript": { "ignoreBuildErrors": false, "tsconfigPath": "tsconfig.json" }, "distDir": ".next", "cleanDistDir": true, "assetPrefix": "", "cacheMaxMemorySize": 52428800, "configOrigin": "next.config.mjs", "useFileSystemPublicRoutes": true, "generateEtags": true, "pageExtensions": ["tsx", "ts", "jsx", "js"], "poweredByHeader": true, "compress": true, "analyticsId": "", "images": { "deviceSizes": [640, 750, 828, 1080, 1200, 1920, 2048, 3840], "imageSizes": [16, 32, 48, 64, 96, 128, 256, 384], "path": "/_next/image", "loader": "default", "loaderFile": "", "domains": ["res.cloudinary.com", "cdn.bhlist.co.in", "images.clerk.dev", "cdn.discordapp.com", "images.unsplash.com", "localhost", "img.clerk.com", "192.168.1.19", "192.168.1.23", "192.168.1.25"], "disableStaticImages": false, "minimumCacheTTL": 60, "formats": ["image/webp"], "dangerouslyAllowSVG": false, "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;", "contentDispositionType": "inline", "remotePatterns": [], "unoptimized": false }, "devIndicators": { "buildActivity": true, "buildActivityPosition": "bottom-right" }, "onDemandEntries": { "maxInactiveAge": 6e4, "pagesBufferLength": 5 }, "amp": { "canonicalBase": "" }, "basePath": "", "sassOptions": {}, "trailingSlash": false, "i18n": null, "productionBrowserSourceMaps": false, "optimizeFonts": true, "excludeDefaultMomentLocales": true, "serverRuntimeConfig": {}, "publicRuntimeConfig": {}, "reactProductionProfiling": false, "reactStrictMode": null, "httpAgentOptions": { "keepAlive": true }, "outputFileTracing": true, "staticPageGenerationTimeout": 60, "swcMinify": true, "output": "standalone", "modularizeImports": { "@mui/icons-material": { "transform": "@mui/icons-material/{{member}}" }, "lodash": { "transform": "lodash/{{member}}" } }, "experimental": { "multiZoneDraftMode": false, "prerenderEarlyExit": false, "serverMinification": true, "serverSourceMaps": false, "linkNoTouchStart": false, "caseSensitiveRoutes": false, "clientRouterFilter": true, "clientRouterFilterRedirects": false, "fetchCacheKeyPrefix": "", "middlewarePrefetch": "flexible", "optimisticClientCache": true, "manualClientBasePath": false, "cpus": 3, "memoryBasedWorkersCount": false, "isrFlushToDisk": true, "workerThreads": false, "optimizeCss": false, "nextScriptWorkers": false, "scrollRestoration": false, "externalDir": false, "disableOptimizedLoading": false, "gzipSize": true, "craCompat": false, "esmExternals": true, "fullySpecified": false, "outputFileTracingRoot": "/var/www/main", "swcTraceProfiling": false, "forceSwcTransforms": false, "largePageDataBytes": 128e3, "adjustFontFallbacks": false, "adjustFontFallbacksWithSizeAdjust": false, "typedRoutes": false, "instrumentationHook": false, "bundlePagesExternals": false, "parallelServerCompiles": false, "parallelServerBuildTraces": false, "ppr": false, "missingSuspenseWithCSRBailout": true, "optimizeServerReact": true, "useEarlyImport": false, "staleTimes": { "dynamic": 30, "static": 300 }, "dynamicIO": true, "allowMiddlewareResponseBody": true, "outputFileTracingIncludes": { "/api/video": ["./videos/**/*.json"] }, "optimizePackageImports": ["lucide-react", "date-fns", "lodash-es", "ramda", "antd", "react-bootstrap", "ahooks", "@ant-design/icons", "@headlessui/react", "@headlessui-float/react", "@heroicons/react/20/solid", "@heroicons/react/24/solid", "@heroicons/react/24/outline", "@visx/visx", "@tremor/react", "rxjs", "@mui/material", "@mui/icons-material", "recharts", "react-use", "@material-ui/core", "@material-ui/icons", "@tabler/icons-react", "mui-core", "react-icons/ai", "react-icons/bi", "react-icons/bs", "react-icons/cg", "react-icons/ci", "react-icons/di", "react-icons/fa", "react-icons/fa6", "react-icons/fc", "react-icons/fi", "react-icons/gi", "react-icons/go", "react-icons/gr", "react-icons/hi", "react-icons/hi2", "react-icons/im", "react-icons/io", "react-icons/io5", "react-icons/lia", "react-icons/lib", "react-icons/lu", "react-icons/md", "react-icons/pi", "react-icons/ri", "react-icons/rx", "react-icons/si", "react-icons/sl", "react-icons/tb", "react-icons/tfi", "react-icons/ti", "react-icons/vsc", "react-icons/wi"], "trustHostHeader": false, "isExperimentalCompile": false }, "configFileName": "next.config.mjs" };
+var BuildId = "Xnhav3UnHdF9H_0BX498p";
 var HtmlPages = ["/404"];
 var RoutesManifest = { "basePath": "", "rewrites": { "beforeFiles": [], "afterFiles": [], "fallback": [] }, "redirects": [{ "source": "/:path+/", "destination": "/:path+", "internal": true, "statusCode": 308, "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$" }], "routes": { "static": [{ "page": "/", "regex": "^/(?:/)?$", "routeKeys": {}, "namedRegex": "^/(?:/)?$" }, { "page": "/_not-found", "regex": "^/_not\\-found(?:/)?$", "routeKeys": {}, "namedRegex": "^/_not\\-found(?:/)?$" }, { "page": "/dashboard", "regex": "^/dashboard(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard(?:/)?$" }, { "page": "/dashboard/assets", "regex": "^/dashboard/assets(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard/assets(?:/)?$" }, { "page": "/dashboard/copy-clips", "regex": "^/dashboard/copy\\-clips(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard/copy\\-clips(?:/)?$" }, { "page": "/dashboard/private", "regex": "^/dashboard/private(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard/private(?:/)?$" }, { "page": "/dashboard/public", "regex": "^/dashboard/public(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard/public(?:/)?$" }, { "page": "/dashboard/ready-to-post", "regex": "^/dashboard/ready\\-to\\-post(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard/ready\\-to\\-post(?:/)?$" }, { "page": "/dashboard/settings", "regex": "^/dashboard/settings(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard/settings(?:/)?$" }, { "page": "/dashboard/settings/checkout-failed", "regex": "^/dashboard/settings/checkout\\-failed(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard/settings/checkout\\-failed(?:/)?$" }, { "page": "/dashboard/settings/quota-exceed", "regex": "^/dashboard/settings/quota\\-exceed(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard/settings/quota\\-exceed(?:/)?$" }, { "page": "/dashboard/settings/subscription", "regex": "^/dashboard/settings/subscription(?:/)?$", "routeKeys": {}, "namedRegex": "^/dashboard/settings/subscription(?:/)?$" }, { "page": "/favicon.ico", "regex": "^/favicon\\.ico(?:/)?$", "routeKeys": {}, "namedRegex": "^/favicon\\.ico(?:/)?$" }], "dynamic": [{ "page": "/api/videos/[filename]", "regex": "^/api/videos/([^/]+?)(?:/)?$", "routeKeys": { "nxtPfilename": "nxtPfilename" }, "namedRegex": "^/api/videos/(?<nxtPfilename>[^/]+?)(?:/)?$" }, { "page": "/dashboard/generate/[[...rest]]", "regex": "^/dashboard/generate(?:/(.+?))?(?:/)?$", "routeKeys": { "nxtPrest": "nxtPrest" }, "namedRegex": "^/dashboard/generate(?:/(?<nxtPrest>.+?))?(?:/)?$" }, { "page": "/sign-in/[[...sign-in]]", "regex": "^/sign\\-in(?:/(.+?))?(?:/)?$", "routeKeys": { "nxtPsignin": "nxtPsign-in" }, "namedRegex": "^/sign\\-in(?:/(?<nxtPsignin>.+?))?(?:/)?$" }, { "page": "/sign-up/[[...sign-up]]", "regex": "^/sign\\-up(?:/(.+?))?(?:/)?$", "routeKeys": { "nxtPsignup": "nxtPsign-up" }, "namedRegex": "^/sign\\-up(?:/(?<nxtPsignup>.+?))?(?:/)?$" }], "data": { "static": [], "dynamic": [] } }, "locales": [] };
-var MiddlewareManifest = { "sortedMiddleware": ["/"], "middleware": { "/": { "files": ["prerender-manifest.js", "server/edge-runtime-webpack.js", "server/middleware.js"], "name": "middleware", "page": "/", "matchers": [{ "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?(?:\\/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*))(.json)?[\\/#\\?]?$", "originalSource": "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)" }, { "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?(?:\\/(api|trpc))(.*)(.json)?[\\/#\\?]?$", "originalSource": "/(api|trpc)(.*)" }], "wasm": [], "assets": [] } }, "functions": {}, "version": 2 };
-var AppPathRoutesManifest = { "/_not-found": "/_not-found", "/api/video/route": "/api/video", "/api/videos/[filename]/route": "/api/videos/[filename]", "/favicon.ico/route": "/favicon.ico", "/page": "/", "/(auth)/sign-up/[[...sign-up]]/page": "/sign-up/[[...sign-up]]", "/(auth)/sign-in/[[...sign-in]]/page": "/sign-in/[[...sign-in]]", "/(dashboard)/dashboard/assets/page": "/dashboard/assets", "/(dashboard)/dashboard/copy-clips/page": "/dashboard/copy-clips", "/(dashboard)/dashboard/generate/[[...rest]]/page": "/dashboard/generate/[[...rest]]", "/(dashboard)/dashboard/page": "/dashboard", "/(dashboard)/dashboard/private/page": "/dashboard/private", "/(dashboard)/dashboard/public/page": "/dashboard/public", "/(dashboard)/dashboard/ready-to-post/page": "/dashboard/ready-to-post", "/(dashboard)/dashboard/(settings)/settings/checkout-failed/page": "/dashboard/settings/checkout-failed", "/(dashboard)/dashboard/(settings)/settings/page": "/dashboard/settings", "/(dashboard)/dashboard/(settings)/settings/subscription/page": "/dashboard/settings/subscription", "/(dashboard)/dashboard/(settings)/settings/quota-exceed/page": "/dashboard/settings/quota-exceed" };
-var FunctionsConfigManifest = { "version": 1, "functions": {} };
+var MiddlewareManifest = { "version": 3, "middleware": { "/": { "files": ["server/edge-runtime-webpack.js", "server/middleware.js"], "name": "middleware", "page": "/", "matchers": [{ "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?(?:\\/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*))(.json)?[\\/#\\?]?$", "originalSource": "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)" }, { "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?(?:\\/(api|trpc))(.*)(.json)?[\\/#\\?]?$", "originalSource": "/(api|trpc)(.*)" }], "wasm": [], "assets": [], "env": { "__NEXT_BUILD_ID": "Xnhav3UnHdF9H_0BX498p", "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "Psz6/qKVYD7jvcQS5mX1Wcs0U0kmWqbLQOnWo3LRPAQ=", "__NEXT_PREVIEW_MODE_ID": "3822dc2cd9b6e9a6d689168c50b29a3a", "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "3336124a229abd71e604fbb88bb7a1752e431e075cf12732f31a1cc53d34fee7", "__NEXT_PREVIEW_MODE_SIGNING_KEY": "c32f659fd7498aa4f71ad2be6cca65c438a4eaeb7cc315e2d811aefbc84834a3" } } }, "functions": {}, "sortedMiddleware": ["/"] };
+var AppPathRoutesManifest = { "/_not-found/page": "/_not-found", "/api/video/route": "/api/video", "/api/videos/[filename]/route": "/api/videos/[filename]", "/favicon.ico/route": "/favicon.ico", "/page": "/", "/(auth)/sign-in/[[...sign-in]]/page": "/sign-in/[[...sign-in]]", "/(auth)/sign-up/[[...sign-up]]/page": "/sign-up/[[...sign-up]]", "/(dashboard)/dashboard/assets/page": "/dashboard/assets", "/(dashboard)/dashboard/copy-clips/page": "/dashboard/copy-clips", "/(dashboard)/dashboard/generate/[[...rest]]/page": "/dashboard/generate/[[...rest]]", "/(dashboard)/dashboard/page": "/dashboard", "/(dashboard)/dashboard/private/page": "/dashboard/private", "/(dashboard)/dashboard/public/page": "/dashboard/public", "/(dashboard)/dashboard/ready-to-post/page": "/dashboard/ready-to-post", "/(dashboard)/dashboard/(settings)/settings/checkout-failed/page": "/dashboard/settings/checkout-failed", "/(dashboard)/dashboard/(settings)/settings/page": "/dashboard/settings", "/(dashboard)/dashboard/(settings)/settings/quota-exceed/page": "/dashboard/settings/quota-exceed", "/(dashboard)/dashboard/(settings)/settings/subscription/page": "/dashboard/settings/subscription" };
 process.env.NEXT_BUILD_ID = BuildId;
 
 // node_modules/@opennextjs/aws/dist/core/createMainHandler.js
@@ -943,12 +950,8 @@ function runWithOpenNextRequestContext({ isISRRevalidation, waitUntil }, fn) {
     waitUntil
   }, async () => {
     provideNextAfterProvider();
-    let result;
-    try {
-      result = await fn();
-    } finally {
-      await awaitAllDetachedPromise();
-    }
+    const result = await fn();
+    await awaitAllDetachedPromise();
     return result;
   });
 }
@@ -1090,36 +1093,18 @@ function getLocaleFromCookie(cookies) {
   const nextLocale = cookies.NEXT_LOCALE?.toLowerCase();
   return nextLocale ? i18n?.locales.find((locale) => nextLocale === locale.toLowerCase()) : void 0;
 }
-function detectDomainLocale({ hostname, detectedLocale }) {
-  const i18n = NextConfig.i18n;
-  const domains = i18n?.domains;
-  if (!domains) {
-    return;
-  }
-  const lowercasedLocale = detectedLocale?.toLowerCase();
-  for (const domain of domains) {
-    const domainHostname = domain.domain.split(":", 1)[0].toLowerCase();
-    if (hostname === domainHostname || lowercasedLocale === domain.defaultLocale.toLowerCase() || domain.locales?.some((locale) => lowercasedLocale === locale.toLowerCase())) {
-      return domain;
-    }
-  }
-}
 function detectLocale(internalEvent, i18n) {
-  const domainLocale = detectDomainLocale({
-    hostname: internalEvent.headers.host
-  });
   if (i18n.localeDetection === false) {
-    return domainLocale?.defaultLocale ?? i18n.defaultLocale;
+    return i18n.defaultLocale;
   }
   const cookiesLocale = getLocaleFromCookie(internalEvent.cookies);
   const preferredLocale = acceptLanguage(internalEvent.headers["accept-language"], i18n?.locales);
   debug({
     cookiesLocale,
     preferredLocale,
-    defaultLocale: i18n.defaultLocale,
-    domainLocale
+    defaultLocale: i18n.defaultLocale
   });
-  return domainLocale?.defaultLocale ?? cookiesLocale ?? preferredLocale ?? i18n.defaultLocale;
+  return cookiesLocale ?? preferredLocale ?? i18n.defaultLocale;
 }
 function localizePath(internalEvent) {
   const i18n = NextConfig.i18n;
@@ -1165,11 +1150,6 @@ function cyrb128(str) {
 }
 
 // node_modules/@opennextjs/aws/dist/core/routing/util.js
-function constructNextUrl(baseUrl, path2) {
-  const nextBasePath = NextConfig.basePath ?? "";
-  const url = new URL(`${nextBasePath}${path2}`, baseUrl);
-  return url.href;
-}
 function convertRes(res) {
   const statusCode = res.statusCode || 200;
   const headers = parseHeaders(res.getFixedHeaders());
@@ -1183,19 +1163,7 @@ function convertRes(res) {
     isBase64Encoded
   };
 }
-function convertToQuery(querystring) {
-  const query = new URLSearchParams(querystring);
-  const queryObject = {};
-  for (const key of query.keys()) {
-    const queries = query.getAll(key);
-    queryObject[key] = queries.length > 1 ? queries : queries[0];
-  }
-  return queryObject;
-}
-function getMiddlewareMatch(middlewareManifest2, functionsManifest) {
-  if (functionsManifest?.functions?.["/_middleware"]) {
-    return functionsManifest.functions["/_middleware"].matchers?.map(({ regexp }) => new RegExp(regexp)) ?? [/.*/];
-  }
+function getMiddlewareMatch(middlewareManifest2) {
   const rootMiddleware = middlewareManifest2.middleware["/"];
   if (!rootMiddleware?.matchers)
     return [];
@@ -1245,7 +1213,8 @@ async function revalidateIfRequired(host, rawPath, headers, req) {
     const revalidateUrl = internalMeta?._nextDidRewrite ? rawPath.startsWith("/_next/data/") ? `/_next/data/${BuildId}${internalMeta?._nextRewroteUrl}.json` : internalMeta?._nextRewroteUrl : rawPath;
     try {
       const hash = (str) => crypto.createHash("md5").update(str).digest("hex");
-      const lastModified = globalThis.__openNextAls.getStore()?.lastModified ?? 0;
+      const requestId = globalThis.__openNextAls.getStore()?.requestId ?? "";
+      const lastModified = globalThis.lastModified[requestId] > 0 ? globalThis.lastModified[requestId] : "";
       const etag = headers.etag ?? headers.ETag ?? "";
       await globalThis.queue.send({
         MessageBody: { host, url: revalidateUrl },
@@ -1262,12 +1231,13 @@ function fixISRHeaders(headers) {
     headers[CommonHeaders.CACHE_CONTROL] = "private, no-cache, no-store, max-age=0, must-revalidate";
     return;
   }
-  const _lastModified = globalThis.__openNextAls.getStore()?.lastModified ?? 0;
+  const requestId = globalThis.__openNextAls.getStore()?.requestId ?? "";
+  const _lastModified = globalThis.lastModified[requestId] ?? 0;
   if (headers[CommonHeaders.NEXT_CACHE] === "HIT" && _lastModified > 0) {
     const age = Math.round((Date.now() - _lastModified) / 1e3);
     const regex = /s-maxage=(\d+)/;
     const cacheControl = headers[CommonHeaders.CACHE_CONTROL];
-    debug("cache-control", cacheControl, _lastModified, Date.now());
+    debug("cache-control", cacheControl, globalThis.lastModified, Date.now());
     if (typeof cacheControl !== "string")
       return;
     const match = cacheControl.match(regex);
@@ -1294,8 +1264,7 @@ function createServerResponse(routingResult, headers, responseStream) {
   }, responseStream, headers);
 }
 async function invalidateCDNOnRequest(params, headers) {
-  const { internalEvent, resolvedRoutes, initialURL } = params;
-  const initialPath = new URL(initialURL).pathname;
+  const { internalEvent, initialPath, resolvedRoutes } = params;
   const isIsrRevalidation = internalEvent.headers["x-isr"] === "1";
   if (!isIsrRevalidation && headers[CommonHeaders.NEXT_CACHE] === "REVALIDATED") {
     await globalThis.cdnInvalidationHandler.invalidatePaths([
@@ -1321,8 +1290,7 @@ init_logger();
 
 // node_modules/@opennextjs/aws/dist/core/routing/middleware.js
 var middlewareManifest = MiddlewareManifest;
-var functionsConfigManifest = FunctionsConfigManifest;
-var middleMatch = getMiddlewareMatch(middlewareManifest, functionsConfigManifest);
+var middleMatch = getMiddlewareMatch(middlewareManifest);
 
 // node_modules/@opennextjs/aws/dist/core/routing/routeMatcher.js
 var optionalLocalePrefixRegex = `^/(?:${RoutesManifest.locales.map((locale) => `${locale}/?`).join("|")})?`;
@@ -1366,8 +1334,7 @@ var dynamicRouteMatcher = routeMatcher(RoutesManifest.routes.dynamic);
 var MIDDLEWARE_HEADER_PREFIX = "x-middleware-response-";
 var MIDDLEWARE_HEADER_PREFIX_LEN = MIDDLEWARE_HEADER_PREFIX.length;
 var INTERNAL_HEADER_PREFIX = "x-opennext-";
-var INTERNAL_HEADER_INITIAL_URL = `${INTERNAL_HEADER_PREFIX}initial-url`;
-var INTERNAL_HEADER_LOCALE = `${INTERNAL_HEADER_PREFIX}locale`;
+var INTERNAL_HEADER_INITIAL_PATH = `${INTERNAL_HEADER_PREFIX}initial-path`;
 var INTERNAL_HEADER_RESOLVED_ROUTES = `${INTERNAL_HEADER_PREFIX}resolved-routes`;
 
 // node_modules/@opennextjs/aws/dist/core/util.js
@@ -1381,7 +1348,7 @@ var resolveFilename2 = mod2._resolveFilename;
 
 // node_modules/@opennextjs/aws/dist/core/util.js
 var cacheHandlerPath = __require.resolve("./cache.cjs");
-var nextServer = new NextServer.default({
+var requestHandler = new NextServer.default({
   conf: {
     ...NextConfig,
     // Next.js compression should be disabled because of a bug in the bundled
@@ -1406,8 +1373,7 @@ var nextServer = new NextServer.default({
   customServer: false,
   dev: false,
   dir: __dirname
-});
-var requestHandler = (metadata) => "getRequestHandlerWithMetadata" in nextServer ? nextServer.getRequestHandlerWithMetadata(metadata) : nextServer.getRequestHandler();
+}).getRequestHandler();
 
 // node_modules/@opennextjs/aws/dist/core/requestHandler.js
 globalThis.__openNextAls = new AsyncLocalStorage();
@@ -1423,7 +1389,7 @@ async function openNextHandler(internalEvent, options) {
     }
     debug("internalEvent", internalEvent);
     const internalHeaders = {
-      initialPath: initialHeaders[INTERNAL_HEADER_INITIAL_URL] ?? internalEvent.rawPath,
+      initialPath: initialHeaders[INTERNAL_HEADER_INITIAL_PATH] ?? internalEvent.rawPath,
       resolvedRoutes: initialHeaders[INTERNAL_HEADER_RESOLVED_ROUTES] ? JSON.parse(initialHeaders[INTERNAL_HEADER_RESOLVED_ROUTES]) : []
     };
     let routingResult = {
@@ -1431,7 +1397,6 @@ async function openNextHandler(internalEvent, options) {
       isExternalRewrite: false,
       origin: false,
       isISR: false,
-      initialURL: internalEvent.url,
       ...internalHeaders
     };
     const headers = "type" in routingResult ? routingResult.headers : routingResult.internalEvent.headers;
@@ -1456,7 +1421,7 @@ async function openNextHandler(internalEvent, options) {
             rawPath: "/500",
             method: "GET",
             headers: {},
-            url: constructNextUrl(internalEvent.url, "/500"),
+            url: "/500",
             query: {},
             cookies: {},
             remoteAddress: ""
@@ -1465,7 +1430,7 @@ async function openNextHandler(internalEvent, options) {
           isExternalRewrite: false,
           isISR: false,
           origin: false,
-          initialURL: internalEvent.url,
+          initialPath: internalEvent.rawPath,
           resolvedRoutes: [{ route: "/500", type: "page" }]
         };
       }
@@ -1478,7 +1443,7 @@ async function openNextHandler(internalEvent, options) {
           isISR: false,
           resolvedRoutes: [],
           origin: false,
-          initialURL: internalEvent.url
+          initialPath: internalEvent.rawPath
         }, headers, options.streamCreator);
         response.statusCode = routingResult.statusCode;
         response.flushHeaders();
@@ -1493,13 +1458,12 @@ async function openNextHandler(internalEvent, options) {
     }
     const preprocessedEvent = routingResult.internalEvent;
     debug("preprocessedEvent", preprocessedEvent);
-    const { search, pathname, hash } = new URL(preprocessedEvent.url);
     const reqProps = {
       method: preprocessedEvent.method,
-      url: `${pathname}${search}${hash}`,
+      url: preprocessedEvent.url,
       //WORKAROUND: We pass this header to the serverless function to mimic a prefetch request which will not trigger revalidation since we handle revalidation differently
       // There is 3 way we can handle revalidation:
-      // 1. We could just let the revalidation go as normal, but due to race conditions the revalidation will be unreliable
+      // 1. We could just let the revalidation go as normal, but due to race condtions the revalidation will be unreliable
       // 2. We could alter the lastModified time of our cache to make next believe that the cache is fresh, but this could cause issues with stale data since the cdn will cache the stale data as if it was fresh
       // 3. OUR CHOICE: We could pass a purpose prefetch header to the serverless function to make next believe that the request is a prefetch request and not trigger revalidation (This could potentially break in the future if next changes the behavior of prefetch requests)
       headers: { ...headers, purpose: "prefetch" },
@@ -1513,7 +1477,7 @@ async function openNextHandler(internalEvent, options) {
     }
     const req = new IncomingMessage(reqProps);
     const res = createServerResponse(routingResult, overwrittenResponseHeaders, options?.streamCreator);
-    await processRequest(req, res, routingResult);
+    await processRequest(req, res, preprocessedEvent);
     const { statusCode, headers: responseHeaders, isBase64Encoded, body } = convertRes(res);
     const internalResult = {
       type: internalEvent.type,
@@ -1522,40 +1486,23 @@ async function openNextHandler(internalEvent, options) {
       body,
       isBase64Encoded
     };
+    const requestId = store?.requestId;
+    if (requestId) {
+      delete globalThis.lastModified[requestId];
+    }
     return internalResult;
   });
 }
-async function processRequest(req, res, routingResult) {
+async function processRequest(req, res, internalEvent) {
   delete req.body;
   try {
-    const initialURL = new URL(routingResult.initialURL);
-    let invokeStatus;
-    if (routingResult.internalEvent.rawPath === "/500") {
-      invokeStatus = 500;
-    } else if (routingResult.internalEvent.rawPath === "/404") {
-      invokeStatus = 404;
-    }
-    const requestMetadata = {
-      isNextDataReq: routingResult.internalEvent.query.__nextDataReq === "1",
-      initURL: routingResult.initialURL,
-      initQuery: convertToQuery(initialURL.search),
-      initProtocol: initialURL.protocol,
-      defaultLocale: NextConfig.i18n?.defaultLocale,
-      locale: routingResult.locale,
-      middlewareInvoke: false,
-      // By setting invokePath and invokeQuery we can bypass some of the routing logic in Next.js
-      invokePath: routingResult.internalEvent.rawPath,
-      invokeQuery: routingResult.internalEvent.query,
-      // invokeStatus is only used for error pages
-      invokeStatus
-    };
-    await requestHandler(requestMetadata)(req, res);
+    await requestHandler(req, res);
   } catch (e) {
     if (e.constructor.name === "NoFallbackError") {
-      await tryRenderError("404", res, routingResult.internalEvent);
+      await tryRenderError("404", res, internalEvent);
     } else {
       error("NextJS request failed.", e);
-      await tryRenderError("500", res, routingResult.internalEvent);
+      await tryRenderError("500", res, internalEvent);
     }
   }
 }
@@ -1568,13 +1515,7 @@ async function tryRenderError(type, res, internalEvent) {
       body: internalEvent.body,
       remoteAddress: internalEvent.remoteAddress
     });
-    const requestMetadata = {
-      // By setting invokePath and invokeQuery we can bypass some of the routing logic in Next.js
-      invokePath: type === "404" ? "/404" : "/500",
-      invokeStatus: type === "404" ? 404 : 500,
-      middlewareInvoke: false
-    };
-    await requestHandler(requestMetadata)(_req, res);
+    await requestHandler(_req, res);
   } catch (e) {
     error("NextJS request failed.", e);
     res.setHeader("Content-Type", "application/json");
@@ -1647,6 +1588,7 @@ async function createMainHandler() {
   globalThis.tagCache = await resolveTagCache(thisFunction.override?.tagCache);
   globalThis.proxyExternalRequest = await resolveProxyRequest(thisFunction.override?.proxyExternalRequest);
   globalThis.cdnInvalidationHandler = await resolveCdnInvalidation(thisFunction.override?.cdnInvalidation);
+  globalThis.lastModified = {};
   const converter2 = await resolveConverter(thisFunction.override?.converter);
   const { wrapper, name } = await resolveWrapper(thisFunction.override?.wrapper);
   debug("Using wrapper", name);

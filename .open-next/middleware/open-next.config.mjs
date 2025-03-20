@@ -5,39 +5,6 @@ var __publicField = (obj, key, value) => {
   return value;
 };
 
-// node_modules/@opennextjs/cloudflare/dist/api/config.js
-function defineCloudflareConfig(options = {}) {
-  const { incrementalCache, tagCache, queue } = options;
-  return {
-    default: {
-      override: {
-        wrapper: "cloudflare-node",
-        converter: "edge",
-        incrementalCache: resolveOverride(incrementalCache),
-        tagCache: resolveOverride(tagCache),
-        queue: resolveOverride(queue)
-      }
-    },
-    middleware: {
-      external: true,
-      override: {
-        wrapper: "cloudflare-edge",
-        converter: "edge",
-        proxyExternalRequest: "fetch"
-      }
-    }
-  };
-}
-function resolveOverride(value) {
-  if (!value || value === "dummy") {
-    return "dummy";
-  }
-  if (value === "direct") {
-    return "direct";
-  }
-  return typeof value === "function" ? value : () => value;
-}
-
 // node_modules/@opennextjs/aws/dist/utils/error.js
 var IgnorableError = class extends Error {
   constructor(message) {
@@ -79,10 +46,11 @@ function getCloudflareContextSync() {
   if (inSSG()) {
     throw new Error(`
 
-ERROR: \`getCloudflareContext\` has been called in sync mode in either a static route or at the top level of a non-static one, both cases are not allowed but can be solved by either:
-  - make sure that the call is not at the top level and that the route is not static
-  - call \`getCloudflareContext({async: true})\` to use the \`async\` mode
-  - avoid calling \`getCloudflareContext\` in the route
+ERROR: \`getCloudflareContext\` has been called in a static route, that is not allowed, this can be solved in different ways:
+
+ - call \`getCloudflareContext({async: true})\` to use the \`async\` mode
+ - avoid calling \`getCloudflareContext\` in the route
+ - make the route non static
 `);
   }
   throw new Error(initOpenNextCloudflareForDevErrorMsg);
@@ -241,10 +209,33 @@ var Cache = class {
 };
 var kv_cache_default = new Cache();
 
+// node_modules/@opennextjs/cloudflare/dist/api/kvCache.js
+var kvCache_default = kv_cache_default;
+
 // open-next.config.ts
-var open_next_config_default = defineCloudflareConfig({
-  incrementalCache: kv_cache_default
-});
+var config = {
+  default: {
+    override: {
+      wrapper: "cloudflare-node",
+      converter: "edge",
+      incrementalCache: async () => kvCache_default,
+      tagCache: "dummy",
+      queue: "dummy"
+    }
+  },
+  middleware: {
+    external: true,
+    override: {
+      wrapper: "cloudflare-edge",
+      converter: "edge",
+      proxyExternalRequest: "fetch"
+    }
+  },
+  dangerous: {
+    enableCacheInterception: false
+  }
+};
+var open_next_config_default = config;
 export {
   open_next_config_default as default
 };
