@@ -57,6 +57,8 @@
     "@react-three/drei": "^9.105.1",
     "@react-three/fiber": "^8.16.1",
     "@swc/core": "^1.11.11",
+    "@swc/core-linux-x64-gnu": "^1.11.11",
+    "@swc/wasm": "^1.11.11",
     "aos": "^2.3.4",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
