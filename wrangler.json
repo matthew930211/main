@@ -11,5 +11,11 @@
   "observability": {
     "enabled": true
   },
-  "upload_source_maps": true
+  "upload_source_maps": true,
+  "routes": [
+    {
+      "pattern": "instaclips.xyz",
+      "custom_domain": true
+    }
+  ]
 }
