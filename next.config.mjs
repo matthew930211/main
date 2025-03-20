@@ -1,4 +1,5 @@
 import { withNextVideo } from "next-video/process";
+import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
@@ -9,5 +10,9 @@ const nextConfig = {
         allowMiddlewareResponseBody: true
     },
 };
+
+if (process.env.NODE_ENV === 'development') {
+    await setupDevPlatform();
+  }
 
 export default withNextVideo(nextConfig);
