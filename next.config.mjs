@@ -13,6 +13,15 @@ const nextConfig = {
         // dynamicIO: true,
         // allowMiddlewareResponseBody: true,
     },
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+          config.resolve.fallback = {
+            fs: false,  // Prevents `fs` from being bundled
+            path: false, // Prevents path issues
+          };
+        }
+        return config;
+    },
 }
 
 export default nextConfig
